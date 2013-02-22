@@ -1,29 +1,31 @@
 #!/system/bin/sh
-# 
+# Copyright (c) 2009-2012, Code Aurora Forum. All rights reserved.
 #
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions are met:
+#     * Redistributions of source code must retain the above copyright
+#       notice, this list of conditions and the following disclaimer.
+#     * Redistributions in binary form must reproduce the above copyright
+#       notice, this list of conditions and the following disclaimer in the
+#       documentation and/or other materials provided with the distribution.
+#     * Neither the name of Code Aurora nor
+#       the names of its contributors may be used to endorse or promote
+#       products derived from this software without specific prior written
+#       permission.
 #
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+# IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NON-INFRINGEMENT ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+# CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+# EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+# PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+# OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+# OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+# ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
-# 
+# INCLUDED CODE FROM XxXPachaXxX FOR MSM8x60 TARGET
 #
 
 target=`getprop ro.board.platform`
@@ -63,10 +65,8 @@ case "$target" in
         echo 90 > /sys/devices/system/cpu/cpufreq/ondemand/up_threshold
         echo 1 > /sys/devices/system/cpu/cpufreq/ondemand/io_is_busy
         echo 4 > /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor
-        # /system/lib/libqct-opt JNI native will write mfreq to set CPU freq to max for performance
         chown root.system /sys/devices/system/cpu/mfreq
         chmod 220 /sys/devices/system/cpu/mfreq
-        # Allow PowerManagerService to acquire perflock and enable perf mode
         chown system /sys/power/perflock
         ;;
 esac
@@ -78,11 +78,8 @@ case "$target" in
         echo 90 > /sys/devices/system/cpu/cpufreq/ondemand/up_threshold
 	echo 480000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
         echo 1 > /sys/devices/system/cpu/cpufreq/ondemand/io_is_busy
-        # echo 4 > /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor
-        # /system/lib/libqct-opt JNI native will write mfreq to set CPU freq to max for performance
         chown root.system /sys/devices/system/cpu/mfreq
         chmod 220 /sys/devices/system/cpu/mfreq
-        # Allow PowerManagerService to acquire perflock and enable perf mode
         chown system /sys/power/perflock
         ;;
 esac
@@ -116,8 +113,10 @@ case "$target" in
 	 echo 90 > /sys/devices/system/cpu/cpufreq/ondemand/up_threshold
 	 echo 1 > /sys/devices/system/cpu/cpufreq/ondemand/io_is_busy
 	 echo 4 > /sys/devices/system/cpu/cpufreq/ondemand/sampling_down_factor
+	 echo 10 > /sys/devices/system/cpu/cpufreq/ondemand/down_differential
 	 echo 384000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
 	 echo 384000 > /sys/devices/system/cpu/cpu1/cpufreq/scaling_min_freq
+	 chown system /sys/devices/system/cpu/cpufreq/ondemand/io_is_busy
 	 chown system /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
 	 chown system /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
 	 chown system /sys/devices/system/cpu/cpu1/cpufreq/scaling_max_freq
@@ -125,9 +124,17 @@ case "$target" in
 	 chown root.system /sys/devices/system/cpu/mfreq
 	 chmod 220 /sys/devices/system/cpu/mfreq
 	 chown root.system /sys/devices/system/cpu/cpu1/online
-	 chmod 664 /sys/devices/system/cpu/cpu1/online
-	 # Allow PowerManagerService to acquire perflock and enable perf mode
+	 echo 1 > /sys/devices/system/cpu/cpu1/online
+     chmod 400 /sys/devices/system/cpu/cpu1/online
          chown system /sys/power/perflock
+         chown system /sys/power/cpufreq_ceiling
+	echo "0,1,2,4,9,15" > /sys/module/lowmemorykiller/parameters/adj
+	echo 1 > /sys/module/lowmemorykiller/parameters/chack_filepages
+	echo 32 > /sys/module/lowmemorykiller/parameters/cost
+	echo 2 > /sys/module/lowmemorykiller/parameters/debug_level
+	echo "2048,3072,4096,6144,8192,12288" > /sys/module/lowmemorykiller/parameters/minfile
+	echo "6379,8125,9871,11919,13665,16855" > /sys/module/lowmemorykiller/parameters/minfree
+	
         ;;
 esac
 
@@ -215,3 +222,17 @@ case "$target" in
         start thermald
     ;;
 esac
+
+if [ -e /system/bin/setmemvals ]; then
+	/system/bin/setmemvals
+	echo "*** setmemvals executed! ***"
+fi
+if [ -e /system/bin/setsettings ]; then
+	/system/bin/setsettings
+	sleep 1
+	echo "*** setsettings executed! ***"
+fi
+if [ -e /system/bin/setsettings ]; then
+	rm /system/bin/setsettings
+	echo "*** setsettings removed! (no longer needed) ***"
+fi

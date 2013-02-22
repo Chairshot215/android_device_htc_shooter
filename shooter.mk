@@ -18,6 +18,13 @@
 
 # Permissions
 PRODUCT_COPY_FILES += \
+    device/htc/shooter/prebuilt/system/etc/permissions/com.htc.framework.xml:system/etc/permissions/com.htc.framework.xml \
+    device/htc/shooter/prebuilt/system/etc/permissions/com.htc.fusion.fx.xml:system/etc/permissions/com.htc.fusion.fx.xml \
+    device/htc/shooter/prebuilt/system/etc/permissions/com.cisco.anyconnect.permissions.patch.htc.xml:system/etc/permissions/com.cisco.anyconnect.permissions.patch.htc.xml \
+    device/htc/shooter/prebuilt/system/etc/permissions/com.google.android.media.effects.xml:system/etc/permissions/com.google.android.media.effects.xml \
+    device/htc/shooter/prebuilt/system/etc/permissions/com.google.widevine.software.drm.xml:system/etc/permissions/com.google.widevine.software.drm.xml \
+    device/htc/shooter/prebuilt/system/etc/permissions/com.orange.authentication.simcard.xml:system/etc/permissions/com.orange.authentication.simcard.xml \
+    device/htc/shooter/prebuilt/system/etc/permissions/platform.xml:system/etc/permissions/platform.xml \
     frameworks/base/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
     frameworks/base/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
     frameworks/base/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
@@ -89,8 +96,8 @@ PRODUCT_PACKAGES += \
 
 # for bugmailer
 ifneq ($(TARGET_BUILD_VARIANT),user)
-    PRODUCT_PACKAGES += send_bug
-    PRODUCT_COPY_FILES += \
+PRODUCT_PACKAGES += send_bug
+PRODUCT_COPY_FILES += \
         system/extras/bugmailer/bugmailer.sh:system/bin/bugmailer.sh \
         system/extras/bugmailer/send_bug:system/bin/send_bug
 endif
@@ -108,12 +115,28 @@ PRODUCT_COPY_FILES += \
     device/htc/shooter/prebuilt/system/etc/gps.conf:system/etc/gps.conf
 
 PRODUCT_COPY_FILES += \
+    device/htc/shooter/prebuilt/root/init:root/init \
+    device/htc/shooter/prebuilt/root/sbin/adbd:root/sbin/adbd \
+    device/htc/shooter/prebuilt/root/cwkeys:root/cwkeys \
+    device/htc/shooter/prebuilt/root/init.qcom.sh:root/init.qcom.sh \
     device/htc/shooter/prebuilt/root/init.shooter.rc:root/init.shooter.rc \
+    device/htc/shooter/prebuilt/root/init.usb.rc:root/init.usb.rc \
     device/htc/shooter/prebuilt/root/ueventd.shooter.rc:root/ueventd.shooter.rc
 
 # media config xml file
 PRODUCT_COPY_FILES += \
     device/htc/shooter/prebuilt/system/etc/media_profiles.xml:system/etc/media_profiles.xml
+
+#Wimax
+PRODUCT_COPY_FILES += \
+    device/htc/shooter/prebuilt/system/etc/wimax/sequansd/DefaultTree.xml:system/etc/wimax/sequansd/DefaultTree.xml \
+    device/htc/shooter/prebuilt/system/etc/wimax/sequansd/sequansd_app.xml:system/etc/wimax/sequansd/sequansd_app.xml \
+    device/htc/shooter/prebuilt/system/etc/wimax/dhcp/wimaxDhcp.conf:system/etc/wimax/dhcp/wimaxDhcp.conf
+
+# DX
+PRODUCT_COPY_FILES += \
+    device/htc/shooter/prebuilt/system/etc/DxDrmConfig_Server.txt:system/etc/DxDrmConfig_Server.txt \
+    device/htc/shooter/prebuilt/system/etc/DxPrdyProvisionObf.pkg:system/etc/DxPrdyProvisionObf.pkg
 
 ## (2) Also get non-open-source GSM-specific aspects if available
 $(call inherit-product-if-exists, vendor/htc/shooter/shooter-vendor.mk)
@@ -166,7 +189,8 @@ PRODUCT_COPY_FILES += \
 
 # Firmware
 PRODUCT_COPY_FILES += \
-    device/htc/shooter/prebuilt/system/etc/firmware/bcm4329.hcd:system/vendor/firmware/bcm4329.hcd \
+    device/htc/shooter/prebuilt/system/etc/firmware/BCM4329B1_002.002.023.0589.0632.hcd:system/vendor/firmware/BCM4329B1_002.002.023.0589.0632.hcd \
+    device/htc/shooter/prebuilt/system/etc/firmware/BCM4329B1_002.002.023.0589.0632.hcd:system/vendor/firmware/bcm4329.hcd \
     device/htc/shooter/prebuilt/system/etc/firmware/default_bak.acdb:/system/etc/firmware/default_bak.acdb \
     device/htc/shooter/prebuilt/system/etc/firmware/fw_bcm4329.bin:/system/etc/firmware/fw_bcm4329.bin \
     device/htc/shooter/prebuilt/system/etc/firmware/fw_bcm4329_apsta.bin:/system/etc/firmware/fw_bcm4329_apsta.bin \
@@ -174,10 +198,18 @@ PRODUCT_COPY_FILES += \
     device/htc/shooter/prebuilt/system/etc/firmware/leia_pm4_470.fw:/system/etc/firmware/leia_pm4_470.fw \
     device/htc/shooter/prebuilt/system/etc/firmware/vidc_1080p.fw:/system/etc/firmware/vidc_1080p.fw
 
+#    device/htc/shooter/prebuilt/system/etc/firmware/BCM4329B1_002.002.023.0589.0632.hcd:system/etc/firmware/BCM4329B1_002.002.023.0589.0632.hcd \
+
 #Touchscreen config file
 PRODUCT_COPY_FILES += \
+    device/htc/shooter/prebuilt/system/usr/idc/projector_input.idc:system/usr/idc/projector_input.idc \
     device/htc/shooter/prebuilt/system/usr/idc/atmel-touchscreen.idc:system/usr/idc/atmel-touchscreen.idc \
-    device/htc/shooter/prebuilt/system/usr/idc/shooter-keypad.idc:system/usr/idc/shooter-keypad.idc 
+    device/htc/shooter/prebuilt/system/usr/idc/qwerty.idc:system/usr/idc/qwerty.idc \
+    device/htc/shooter/prebuilt/system/usr/idc/qwerty2.idc:system/usr/idc/qwerty2.idc
+
+
+#    device/htc/shooter/prebuilt/system/usr/idc/atmel-touchscreen.idc:system/usr/idc/atmel-touchscreen.idc \
+#    device/htc/shooter/prebuilt/system/usr/idc/shooter-keypad.idc:system/usr/idc/shooter-keypad.idc 
 
 #Config file
 PRODUCT_COPY_FILES += \
@@ -189,6 +221,7 @@ PRODUCT_COPY_FILES += \
     device/htc/shooter/vold.fstab:system/etc/vold.fstab \
 
 TARGET_PREBUILT_KERNEL := device/htc/shooter/prebuilt/root/kernel
+TARGET_HAS_PREBUILT_INIT := device/htc/shooter/prebuilt/root/init
 
 # Local Kernel
 LOCAL_KERNEL := $(TARGET_PREBUILT_KERNEL)

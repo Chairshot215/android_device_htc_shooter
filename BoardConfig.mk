@@ -137,25 +137,23 @@ BOARD_HAVE_SQN_WIMAX := true
 ##################################################################
 
 # Partition information grabbed through adb shell
-# $ cat /proc/emmc 
+#cat /proc/emmc
 #dev:        size     erasesize name
-#mmcblk0p35: 000ffa00 00000200 "misc"
+#mmcblk0p17: 00040000 00000200 "misc"
 #mmcblk0p22: 00fffc00 00000200 "recovery"
 #mmcblk0p21: 01000000 00000200 "boot"
 #mmcblk0p23: 31fffc00 00000200 "system"
-#mmcblk0p33: 00140200 00000200 "local"
-#mmcblk0p25: 06eb5c00 00000200 "cache"
+#mmcblk0p32: 00140200 00000200 "local"
+#mmcblk0p25: 06ebde00 00000200 "cache"
 #mmcblk0p24: 4aabc400 00000200 "userdata"
-#mmcblk0p29: 01400000 00000200 "devlog"
-#mmcblk0p31: 00040000 00000200 "pdata"
-#mmcblk0p26: 00008000 00000200 "extra"
+#mmcblk0p28: 01400000 00000200 "devlog"
+#mmcblk0p30: 00040000 00000200 "pdata"
 #mmcblk0p18: 02800000 00000200 "radio"
-#mmcblk0p20: 01000000 00000200 "adsp"
 #mmcblk0p19: 007ffa00 00000200 "radio_config"
-#mmcblk0p27: 00400000 00000200 "modem_st1"
-#mmcblk0p28: 00400000 00000200 "modem_st2"
+#mmcblk0p26: 00400000 00000200 "modem_st1"
+#mmcblk0p27: 00400000 00000200 "modem_st2"
 #mmcblk0p8: 00c00200 00000200 "wimax"
-#mmcblk0p34: 007ffa00 00000200 "udata_wimax"
+#mmcblk0p33: 007ffa00 00000200 "udata_wimax"
 
 # Filesystem
 BOARD_VOLD_MAX_PARTITIONS := 36
@@ -170,7 +168,7 @@ BOARD_RECOVERYIMAGE_PARTITION_SIZE := 16776192
 BOARD_SYSTEMIMAGE_PARTITION_SIZE := 838859776
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 1252770816
 BOARD_FLASH_BLOCK_SIZE := 131072
-TARGET_RELEASETOOLS_EXTENSIONS := device/htc/tools
+TARGET_RELEASETOOLS_EXTENSIONS := device/htc/common
 
 # Filesystem
 BOARD_VOLD_MAX_PARTITIONS := 36
@@ -188,10 +186,10 @@ TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_RECOVERY_FSTAB := device/htc/shooter/recovery.fstab
 
 TARGET_PREBUILT_KERNEL := device/htc/shooter/prebuilt/root/kernel
+TARGET_HAS_PREBUILT_INIT := device/htc/shooter/prebuilt/root/init
 
 BOARD_USES_MMCUTILS := true
 BOARD_HAS_NO_MISC_PARTITION := true
 BOARD_HAS_NO_SELECT_BUTTON := 1
+BOARD_HAS_NO_SELECT_BUTTON := true
 
-# USB
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun0/file

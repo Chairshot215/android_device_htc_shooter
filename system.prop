@@ -2,6 +2,8 @@
 # system.prop for shooter
 #
 
+keyguard.no_require_sim=1
+
 ro.sf.lcd_density=240
 
 sf.debug.enable3D = 1
@@ -27,7 +29,7 @@ persist.data_netmgrd_mtu=1472
 #
 
 wifi.interface=wlan0
-wifi.supplicant_scan_interval=15
+wifi.supplicant_scan_interval=90
 
 # The OpenGL ES API level that is natively supported by this device.
 # This is a 16.16 fixed point number
@@ -46,6 +48,9 @@ ro.ril.def.agps.mode = 2
 ro.phone_storage = 0
 # For ext4 file system
 ro.ext4fs = 1
+
+# UMS
+#persist.sys.usb.config=mass_storage,adb
 
 # For FOTA setting (leave empty value to use default)
 ro.htc.checkin.url = http://andchin.htc.com/android/checkin
